@@ -7,7 +7,9 @@ header {
   position: sticky;
   top: 0;
 }
-
+footer {
+  bottom: 0;
+}
 
 * hover{
   margin:auto;
@@ -48,41 +50,48 @@ header {
 
 
 .flex-container {
-  display: flex;
-  flex-direction: column;
+  display:flex; 
+  align : center;
+  flex-direction:row;
   background-color: blanchedalmond;
   align-items: center;
-  height: 100%;
+  height: 100vh;
+  padding-left: 25em;
+  padding-right:25em;
+  justify-items: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+  border-radius: 5px;
 }
 
 .flex-container > div {
-  display: flex;
-  
+  justify-items: center;
   background-color: #f1f1f1;
-  height:100%;
-  margin: 10px;
+  flex-direction: column;
   text-align: center;
   line-height: 75px;
   font-size: 30px;
 }
 .flex-child{
+  overflow-y: auto;
   background-color: lightpink;
   border: solid;
   text-align: center;
-  width: 30%;
+  font-size: 20px;
+  width: 40%;
+  padding : 3em 1em;
   text-shadow: black;
-
-
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1.0)
+  font-size : medium;
+  line-height: 1.5em;
 }
-
 .img_1{
   display: flex;
   align: center;
   justify-content: center;
-  width: 100%;
-  height:100%;
-  border-style: solid;
   text-shadow: blue;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+  border-radius: 5px;
 }
 
 .home{
@@ -92,37 +101,73 @@ header {
 #table1 {
   text-align: center;
   text-shadow: brown;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+  border-radius: 5px;
 }
 
 #links{
   display: flex;
   align : center;
-  width: 100%;
-  /*justify-content : space-around;*/
-  background-color: darkred;
+  background-color: lightskyblue;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+  border-radius: 5px;
 }
-#links div{
-margin-left: 100px;
-}
+
 #number{
   align : center
 
 }
-/*.block1{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}*/
 
+#submit {
+  padding: 10px;
+  border-radius: 2px;
+}
+
+#name {
+  padding: 10px;
+  border-radius: 2px;
+}
+
+#email {
+  padding: 10px;
+  border-radius: 2px;
+}
+
+#contact {
+  padding: 10px;
+  border-radius: 2px;
+}
+
+#reset {
+  padding: 10px;
+  border-radius: 2px;
+}
+#Qualification {
+  padding: 10px;
+  border-radius: 2px;
+}
+
+form {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+  border-radius: 5px;
+}
 
 .box
 {
   display: flex;
   justify-content: space-around;
+ box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+  border-radius: 5px;
 
 }
 
- #contact {
-  display: flex;
-  text-align: center;
+ #video {
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 0 5px rgba(5,5,5);
+  margin: 25px 50px 75px 100px;
+
+ }
+ #form{
+box-shadow: 0 0 10px rgba(0, 0, 0, 1.0);
  }

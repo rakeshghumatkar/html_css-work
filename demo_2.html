@@ -10,7 +10,6 @@
     	<a class="active" href="#home">Home</a>
     	<a href="#experience">Experience</a>
     	<a href="#Education">Education Details</a>
-    	<a href="#contact">Contact</a>
     	<a href="#form">Contact From</a>
     	<a href="#video">Video</a>
     	<a href="#about">About</a>
@@ -39,6 +38,7 @@
 	<section>
 		<h1><b>Experience</b></h1>
 		<div class="flex-container">
+			
 			<p id= "experience"></b></p>
 			<div class="img_1">
 
@@ -108,23 +108,10 @@
 	</section>
 
 	<section>
-		<p id="contact"></p>
-	 	<h2><b>Contact Details</b></h2>
-		<div class="flex-container">
-	 		<div id="links">
-	 			
-
-	 			<div><a href="https://www.linkedin.com/in/rakesh-ghumatkar-682896155/" target = "_blank">Linkdin</a></div>
-
-	 			<div><a href="https://github.com/rakeshghumatkar/"target = "_blank">GitHub</a></div>
-	 			<div id="number">
-	 				<p>Contact No. 0987654321</p>
-	 			</div>
-			</div>
-		</div>
+		
 	</section>
 
-	<p id="form"></p>
+	<p id="form" style_2="box-shadow: 0 0 10px rgba(0, 0, 0, 1.0)"></p>
 	<section>
 		<h2>Contact Form</h2>
 		<div class="flex-container">
@@ -133,15 +120,15 @@
 					
 
 					<label for=" ">Name</label>
-					<input type="text" id=name name="name" value=" " required=""><br>
+					<input type="text" id="name" value=" " required=""><br>
 
 					
 					<label for="">Email id</label>
-					<input type="email" name="email" placeholder="abc@gmail.com" required=""><br>
+					<input type="email" id="email" placeholder="abc@gmail.com" required=""><br>
 
 					
 					<label>Contact No.</label>
-					<input type="text" name="Contact" maxlength="10"><br>
+					<input type="text" id="contact" maxlength="10"><br>
 				    
 					
 					<label for =" ">Higher Qualification</label><br>
@@ -180,10 +167,10 @@
 		
 
 					<label>Submit</label>
-					<input type="Submit" name="submit" value="Submit">
+					<button type="Submit" id="submit" value="Submit"><b>Submit</b></button>
 
 					<label>Reset</label>
-					<input type="reset" name="reset" value="reset">
+					<button type="reset" id="reset" value="reset"><b>Reset</b></button>
 
 				</form>
 			</div>
@@ -194,11 +181,28 @@
 		<p id="video"></p>
 		<h2>Video</h2>
 		<div class="flex-container">		
-			<div>
+			<div >
 				
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/msSc7Mv0QHY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<iframe width="750" height="400" src="https://www.youtube.com/embed/msSc7Mv0QHY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
+		 </div> 
+
+
+		<p id="about"></p>
+	 	 <h2><b>About</b></h>
+		<div class="flex-container"> 
+	 		<div id="links">
+	 			
+
+	 			<div><a href="https://www.linkedin.com/in/rakesh-ghumatkar-682896155/" target = "_blank">Linkdin</a></div>
+
+	 			<div><a href="https://github.com/rakeshghumatkar/"target = "_blank">GitHub</a></div>
+	 			<div id="number">
+	 				Contact No. 0987654321
+	 			</div>
 			</div>
 		</div>
+
 	</section>
 
 </body>
