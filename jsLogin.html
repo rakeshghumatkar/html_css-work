@@ -1,0 +1,96 @@
+<html>
+<body>
+<script>  
+function validateform(){  
+var name=document.myform.name.value;  
+var lname =document.myform.lname.value;  
+var contact =document.myform.contact.value; 
+var uname =document.myform.uname.value; 
+var password =document.myform.password.value; 
+  
+  if (name==null || name==""){  
+  alert("Name can't be blank");  
+  return false;  
+  }
+
+  else if(name.length<3 || name.lenght>30){  
+  alert("Name is between character 3 to 30.");  
+  return false;  
+  }  
+
+  else if (lname==null || lname==""){  
+  alert("Lastname can't be blank");  
+  return false;  
+  }
+
+ else if(lname.length<3 || lname.lenght>30){  
+ alert("Lastname is between character 3 to 30.");  
+ return false;  
+  }  
+
+else if (contact==null || contact==""){  
+  alert("Contact number can't be blank");  
+  return false;  
+  }
+
+else if (contact.length!=10) {
+  alert("Contact number should be 10 digit");
+  return false;
+}
+
+// else if(uname != uname.toUpperCase()){
+//  alert("Username contain atleast 1 uppercase letter");
+//  returns false;
+// }
+
+// else if(uname != uname.LowerCase()){
+//  alert("Username contain atleast 1 lowercase letter");
+//  returns false;
+// }
+
+else if(password.length<7 || password.lenght>15){  
+  alert("Password must be between 7 to 15 characters long.");  
+  return false;  
+  }  
+
+  else {
+    alert("Login Successful....!")
+    return true;
+  }
+
+}  
+</script>  
+<body>  
+<form name="myform" method="post" action="" onsubmit="return validateform()" >  
+Name:<input type="text" name="name"><br/> <br>
+Lastname:   <input type="text" name="lname"><br/><br>
+Email id:   <input type="email" name="email" placeholder="abc@gmail.com" ><br/><br>
+Contact No: <input type="number" name="contact" ><br/><br>
+Username:   <input type="text" name="uname"><br/><br>
+Password: <input type="password" name="password"><br/> <br>
+
+<label for =" ">Higher Qualification</label>
+<select name ="Qualification"  id="Qualification">
+  <option value = " ">Choose Qualification</option>
+  <option value = "PhD">PhD</option>
+  <option value= "Post Graduation">Post Graduation</option>
+  <option value="Bachelors">Bachelors</option>
+  <option value="HSC">HSC</option>
+  <option value="SSC">SSC</option>
+  <option value="None">None</option>
+</select><br><br>
+    
+<label for="Gender">Gender :</label>
+          
+ <input type="radio" id="Male" name="Gender" value="Male">
+ <label for="Male">Male</label>
+ <input type="radio" id="Female" name="Gender" value="Female">
+ <label for="Female">Female</label>
+ <input type="radio" id="Others" name="Gender" value="Others">
+ <label for="Others">Others</label><br><br>
+
+
+<input type="submit" value="submit">  
+</form>  
+</body>
+</html>
