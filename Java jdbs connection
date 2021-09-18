@@ -1,0 +1,205 @@
+import java.sql.*;
+import java.util.Scanner;
+
+
+class Employee1
+{	
+	public int Empid;
+	public String Ename;
+	public String E_dob;
+	public String E_doj;
+	public String location;
+	public float basicsalary;
+
+}
+
+class Employee_Salary extends Employee1
+{
+	
+	private float HRA;
+	private float DA;
+	private float TA;
+	private float PF;
+	private float Gross_sal;
+	private float Net_sal;
+
+	 void cal() {
+		HRA = 0.2f * basicsalary;
+		DA = 0.15f*basicsalary;
+		TA = 0.1f*basicsalary;
+		PF = 0.125f*basicsalary;
+		 
+		Gross_sal = basicsalary + HRA + DA + TA;
+		Net_sal = Gross_sal - PF;
+	 }
+	 
+	 
+	 void create()
+		{
+			Scanner sc = new Scanner(System.in);
+			System.out.println("enter the employee id");
+			Empid = sc.nextInt();
+			System.out.println("enter the employee name");
+			Ename = sc.next();
+			System.out.println("enter the employee DOB in dd/mm/yy formate");
+			E_dob = sc.next();
+			System.out.println("enter the employee DOJ in dd/mm/yy formate");
+			E_doj = sc.next();
+			System.out.println("enter the employee location");
+			location = sc.next();
+			System.out.println("enter the employee basic salary");
+			basicsalary = sc.nextFloat();
+			cal();
+			
+			try
+			{
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con =DriverManager.getConnection("jdbc:mysql://localhost:3306/practice", "root", "rakesh");
+				Statement st = con.createStatement();
+				st.executeUpdate("insert into EmployeeDetails values ("+Empid+", '"+Ename+"', '"+E_dob+"', '"+E_doj+"','"+location+"',"+basicsalary+")");
+				st.executeUpdate("insert into SalaryDetails values ("+Empid+", "+HRA+", "+DA+", "+TA+","+PF+","+Gross_sal+","+Net_sal+")");
+				System.out.println("New entry is added successfully!");
+				st.close();
+				con.close();
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			} 
+			
+		}
+		
+		void delete()
+		{
+			Scanner sc = new Scanner(System.in);
+			System.out.println("enter the employee id ");
+			int Searchid = sc.nextInt();
+			// search logic & delete logic
+			try
+			{
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+				Statement st = con.createStatement();
+				st.executeUpdate("DELETE FROM EmployeeDetails WHERE Empid="+Searchid+"");
+				st.executeUpdate("DELETE FROM SalaryDetails WHERE Empid="+Searchid+"");
+				System.out.println("Delete opration perform successfully!");
+				st.close();
+				con.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+		
+		
+		void update()
+		{
+			Scanner sc = new Scanner(System.in);
+			System.out.println("enter the student id ");
+			int Searchid = sc.nextInt();
+			// search logic
+			try 
+			{
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+			Statement st = con.createStatement();
+			
+			System.out.println("enter the new employee name ");
+			Ename = sc.next();
+			System.out.println("enter the employee DOB in dd/mm/yy formate");
+			E_dob = sc.next();
+			System.out.println("enter the employee DOJ in dd/mm/yy formate");
+			E_doj = sc.next();
+			System.out.println("enter the employee location");
+			location = sc.next();
+			System.out.println("enter the employee basic salary");
+			basicsalary = sc.nextFloat();
+			
+			st.executeQuery("SET SQL_SAFE_UPDATES = 0");
+			st.executeUpdate("update EmployeeDetails set Emlpoyee_name='"+Ename+"', DOB='"+E_dob+"', DOJ='"+E_doj+"',Designation='"+location+"',BasicSal="+basicsalary+" where Empid="+Searchid+"");
+			cal();
+			st.executeUpdate("update SalaryDetails set HRA = "+HRA+", DA = "+DA+", TA = "+TA+", PF="+PF+", Gross_sal= "+Gross_sal+", Net_sal= "+Net_sal+" where Empid = "+Searchid+"");
+			st.executeQuery("SET SQL_SAFE_UPDATES = 1");
+			st.close();
+			con.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+			
+			
+			
+		}
+		
+		void showAll()
+		{
+			try {
+				Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+				Statement st = con.createStatement();
+				ResultSet rs1 =st.executeQuery("select *from EmployeeDetails order by Empid");
+				String userdata1= "";
+				System.out.println("Employee Details Table : \n");
+				while(rs1.next())
+				{
+					userdata1 = rs1.getInt(1) +" : "+rs1.getString(2)+ " : " +rs1.getString(3)+" : "+rs1.getString(4)+ " : "+rs1.getString(5)+ " : "+rs1.getFloat(6);
+					System.out.println(userdata1);
+				}
+				
+				ResultSet rs2 =st.executeQuery("select *from SalaryDetails order by Empid");
+				String userdata2= "";
+				System.out.println("\nEmployee Salary Details Table : \n");
+				while(rs2.next())
+				{
+					userdata2 = rs2.getInt(1) +" : "+rs2.getFloat(2)+" : "+rs2.getFloat(3)+" : "+rs2.getFloat(4)+" : "+rs2.getFloat(5)+" : "+rs2.getFloat(6)+" : "+rs2.getFloat(7);
+					System.out.println(userdata2);
+				}
+				st.close();
+				con.close();
+				
+				
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+   
+}
+
+public class FinalAssignment {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		int c;
+		Employee_Salary s = new Employee_Salary();
+		do
+		{
+			
+			System.out.println("     WELCOME!");
+			int n;
+			System.out.println("enter the following operation you want to perform");
+			System.out.println("for creation press 1");
+			System.out.println("for deletion press 2");
+			System.out.println("for update press 3");
+			System.out.println("for show-all press 4");
+			Scanner sc = new Scanner(System.in);
+			n = sc.nextInt();
+			switch(n)
+			{
+			case 1 -> s.create();
+			case 2 -> s.delete();
+			case 3 -> s.update();
+			case 4 -> s.showAll();
+			
+			default -> System.out.println("Invalid Input");
+			}
+			
+			System.out.println("for continue \nfor yes press 1 or no press any other keys");
+			c = sc.nextInt();
+			
+		}while(c==1);
+
+	}
+
+}
