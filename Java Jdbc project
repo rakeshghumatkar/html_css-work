@@ -1,0 +1,358 @@
+import java.sql.*;
+import java.util.Scanner;
+
+// Base or Parent class
+class EmployeesDetails
+{	
+	//Parameters
+	public int Empid;
+	private String Ename;
+	private Date E_dob;
+	private Date E_doj;
+	private String designation;
+	public float basicsalary;
+	public int Searchid; //Additional parameter for searching operation
+	
+	void input1()
+	{
+		//Specially for checking date input in given format or not 
+		try  
+		{
+			//taking input parameter from user
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter the employee id");
+			Empid = sc.nextInt();
+			System.out.println("Enter the employee name");
+			Ename = sc.next();
+		
+			System.out.println("Enter the employee DOB in yyyy-mm-dd formate");
+			String dob = sc.next();
+			E_dob=Date.valueOf(dob);
+			System.out.println("Enter the employee DOJ in yyyy-mm-dd formate");
+			String doj = sc.next();
+			E_doj=Date.valueOf(doj);
+
+			System.out.println("Enter the employee designation");
+			designation = sc.next();
+			System.out.println("Enter the employee basic salary");
+			basicsalary = sc.nextFloat();
+		} 
+		// if date is not in proper format throw an exception 
+		catch(java.lang.IllegalArgumentException e)
+			{
+				System.out.println("Please enter the date/other paramenters in proper formate");
+			}
+		
+		
+	}
+	
+	void display1()
+	{
+		System.out.print("Employees [Empid=" + Empid + ", Ename=" + Ename + ", E_dob=" + E_dob + ", E_doj=" + E_doj
+				+ ", designation=" + designation + ", basicsalary=" + basicsalary + "]\n");
+	}
+	 void create1()
+		{
+		 	input1();
+				try
+				{
+					// Database connection on mysql 
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con =DriverManager.getConnection("jdbc:mysql://localhost:3306/practice", "root", "rakesh");
+					Statement st = con.createStatement();
+					// inserting the parameter in mysql database
+					st.executeUpdate("insert into EmployeeDetails values ("+Empid+", '"+Ename+"', '"+E_dob+"', '"+E_doj+"','"+designation+"',"+basicsalary+")");
+					display1();
+					st.close();
+					con.close();
+				}
+				//If any exception occurs in connectivity to mysql display in the catch box 
+				catch(Exception e) {
+					System.out.println(e);
+				} 
+			
+				
+		}
+		
+	 
+	 //Delete the specific employee details from the record with the help of employee id 
+		void delete1()
+		{
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter the Employee id that you want to delete ");
+			Empid = sc.nextInt();
+			
+			try
+			{
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+				Statement st = con.createStatement();
+				//Performing delete operation
+				st.executeUpdate("DELETE FROM EmployeeDetails WHERE Empid="+Empid+"");
+				st.close();
+				con.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+		
+		
+		void update1()
+		{
+			try 
+			{	//taking updated employee id to perform updated operation
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Enter the Employee id that you want to be update");
+				Empid = sc.nextInt();
+			
+				try 
+				{		// taking updated parameters
+					System.out.println("Enter the new employee name ");
+					Ename = sc.next();
+					
+					System.out.println("Enter the new employee DOB in yyyy/mm/dd format");
+					String dob = sc.next();
+					E_dob=Date.valueOf(dob);
+					System.out.println("enter the new employee DOJ in yyyy/mm/dd format");
+					String doj = sc.next();
+					E_doj=Date.valueOf(doj);	
+					
+					System.out.println("enter the new employee designation");
+					designation = sc.next();
+					System.out.println("enter the new employee basic salary");
+					basicsalary = sc.nextFloat();
+					
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+					Statement st = con.createStatement();
+					// performing updated operation in mysql
+					st.executeQuery("SET SQL_SAFE_UPDATES = 0");
+					st.executeUpdate("update EmployeeDetails set Emlpoyee_name='"+Ename+"', DOB='"+E_dob+"', DOJ='"+E_doj+"',Designation='"+designation+"',BasicSal="+basicsalary+" where Empid="+Empid+"");
+					st.executeQuery("SET SQL_SAFE_UPDATES = 1");
+					display1();
+					st.close();
+					con.close();
+				}
+				catch(Exception e)
+					{
+						System.out.println(e);
+					}
+			}
+			// if date is not in proper format throw an exception 
+			catch(java.lang.IllegalArgumentException e)
+				{
+					System.out.println("Please enter the date/other parameter in proper formate");
+				}
+			
+		}
+		
+		void showAll1()
+		{
+			try
+			{	
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+				Statement st = con.createStatement();
+				
+				// fetching employee details record from mysql
+				ResultSet rs1 =st.executeQuery("select *from EmployeeDetails order by Empid");
+				String userdata1= "";
+				System.out.println("Employee Details Table : \n");
+				
+				// Fetching single employee data and display, until the last record 
+				while(rs1.next())
+				{
+					userdata1 = rs1.getInt(1) +" : "+rs1.getString(2)+ " : " +rs1.getString(3)+" : "+rs1.getString(4)+ " : "+rs1.getString(5)+ " : "+rs1.getFloat(6);
+					System.out.println(userdata1);
+				}
+				
+				st.close();
+				con.close();		
+				
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+
+
+}
+
+// Derived or Child class from Parent class Employees
+class EmployeeSalaryDetails extends EmployeesDetails
+{
+	// Employee Salary Parameters
+	private float HRA;
+	private float DA;
+	private float TA;
+	private float PF;
+	private float Gross_sal;
+	private float Net_sal;
+
+	// Parameter calculation as per condition
+	 void cal() {
+		HRA = 0.2f * basicsalary;
+		DA = 0.15f * basicsalary;
+		TA = 0.1f * basicsalary;
+		PF = 0.125f*basicsalary;
+		 
+		Gross_sal = basicsalary + HRA + DA + TA;
+		Net_sal = Gross_sal - PF;
+	 }
+	 void display()
+	 {
+		System.out.print("EmployeeSalaryDetails [HRA=" + HRA + ", DA=" + DA + ", TA=" + TA + ", PF=" + PF + ", Gross_sal="
+				+ Gross_sal + ", Net_sal=" + Net_sal + "]\n"); 
+	 }
+	 
+	// for creation of new entry of employee
+	 void create()
+		{
+		 create1();	//Adding the parent class parameter
+			cal();	//Calculating salary parameter
+			
+				try
+				{
+					// Database connection on mysql 
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con =DriverManager.getConnection("jdbc:mysql://localhost:3306/practice", "root", "rakesh");
+					Statement st = con.createStatement();
+					// inserting the parameter in mysql database
+					st.executeUpdate("insert into SalaryDetails values ("+Empid+", "+HRA+", "+DA+", "+TA+","+PF+","+Gross_sal+","+Net_sal+")");
+					display();
+					System.out.println("New Employee Record Added!");
+					st.close();
+					con.close();
+				}
+				//If any exception occurs in connectivity to mysql display in the catch box 
+				catch(Exception e) {
+					System.out.println(e);
+				} 
+			
+		 }
+		 
+				
+
+		
+	 
+	 //Delete the specific employee details from the record with the help of employee id 
+		void delete()
+		{
+			delete1(); // Deleting parent class parameter
+			try
+			{	
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+				Statement st = con.createStatement();
+				//Performing delete operation
+				st.executeUpdate("DELETE FROM SalaryDetails WHERE Empid="+Empid+"");
+				showAll();
+				System.out.println("Delete opration perform successfully!");
+				st.close();
+				con.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+		
+		
+		void update()
+		{
+			update1();
+			cal();
+				try 
+				{	
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+					Statement st = con.createStatement();
+					// performing updated operation in mysql
+					st.executeQuery("SET SQL_SAFE_UPDATES = 0");
+					st.executeUpdate("update SalaryDetails set HRA = "+HRA+", DA = "+DA+", TA = "+TA+", PF="+PF+", Gross_sal= "+Gross_sal+", Net_sal= "+Net_sal+" where Empid = "+Empid+"");
+					st.executeQuery("SET SQL_SAFE_UPDATES = 1");
+					display();
+					System.out.println("Record updation is successful");
+					st.close();
+					con.close();
+				}
+				catch(Exception e)
+					{
+						System.out.println(e);
+					}
+			}
+			
+		
+		void showAll()
+		{
+			showAll1();
+			try
+			{	
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","rakesh");
+				Statement st = con.createStatement();
+				
+				// fetching employee salary details record from mysql
+				ResultSet rs2 =st.executeQuery("select *from SalaryDetails order by Empid");
+				String userdata2= "";
+				System.out.println("\nEmployee Salary Details Table : \n");
+				
+				// Fetching single employee salary data and display, until the last record 
+				while(rs2.next())
+				{
+					userdata2 = rs2.getInt(1) +" : "+rs2.getFloat(2)+" : "+rs2.getFloat(3)+" : "+rs2.getFloat(4)+" : "+rs2.getFloat(5)+" : "+rs2.getFloat(6)+" : "+rs2.getFloat(7);
+					System.out.println(userdata2);
+				}
+				st.close();
+				con.close();		
+				
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+   
+}
+
+public class FinalAssignment {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int c;
+		// Creating instance of EmployeeSalaryDetails class which is extends by employees class
+		EmployeeSalaryDetails ES = new EmployeeSalaryDetails();
+		do
+		{
+			System.out.println("\n ***WELCOME!***");
+			int n;
+			System.out.println("enter the following operation you want to perform");
+			System.out.println("1. Enter the New-Employee Record ");
+			System.out.println("2. View-All the Employee Record");
+			System.out.println("3. Update the Employee Record ");
+			System.out.println("4. Delete the Employee Record ");
+			Scanner sc = new Scanner(System.in);
+			n = sc.nextInt();
+			switch(n)
+			{
+				case 1 -> ES.create();
+				case 2 -> ES.showAll();
+				case 3 -> ES.update(); 
+				case 4 -> ES.delete();
+				
+				default -> System.out.println("Invalid Input");
+			}
+			
+			System.out.println("for continue?\n if 1.yes, otherwise press anyother integer keys");
+			c = sc.nextInt();
+			
+		}while(c==1);
+		
+		System.out.println("THANK YOU FOR USING THE SERVICS ");
+
+	}
+
+}
